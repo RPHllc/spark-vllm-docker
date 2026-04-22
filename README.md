@@ -135,6 +135,21 @@ For periodic maintenance, I recommend using a filter: `docker builder prune --fi
 
 ## CHANGELOG
 
+### 2026-04-22
+
+#### GB10-tuned MoE config for Qwen3.6-35B-A3B-FP8
+
+Added a new mod `mods/install-gb10-moe-config` that installs a tuned fused MoE kernel config for `Qwen/Qwen3.6-35B-A3B-FP8` on `NVIDIA GB10` systems.
+
+This avoids the default Triton fallback (`Using default MoE config. Performance might be sub-optimal!`) for the tuned shape (`E=256`, `N=512`, `dtype=fp8_w8a8`, `block_shape=[128,128]`) and improved throughput by about 30% during local testing on GB10 hardware.
+
+To use it, add the mod when launching:
+
+```bash
+./launch-cluster.sh --solo --apply-mod mods/install-gb10-moe-config \
+  exec vllm serve Qwen/Qwen3.6-35B-A3B-FP8 ...
+```
+
 ### 2026-04-14
 
 Added `--load-format instanttensor` support to vLLM - thanks @SeraphimSerapis. 
@@ -1356,6 +1371,7 @@ The vLLM Docker setup supports applying custom mods and patches to address speci
 The repository includes several pre-configured mods in the `mods/` directory:
 
 - **fix-Salyut1-GLM-4.7-NVFP4/**: Contains patches glm4moe parser to work with fused QKV quantization scheme for Salyut1/GLM-4.7-NVFP4 quant of the newly released GLM 4.7 model.
+- **install-gb10-moe-config/**: Installs a tuned fused MoE kernel config for `Qwen/Qwen3.6-35B-A3B-FP8` on `NVIDIA GB10`, avoiding the generic fallback config and improving throughput.
 
 Each mod directory typically contains:
 - Patch files (`.patch`) for code modifications and/or other assets.

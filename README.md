@@ -141,7 +141,7 @@ For periodic maintenance, I recommend using a filter: `docker builder prune --fi
 
 Added a new mod `mods/install-gb10-moe-config` that installs a tuned fused MoE kernel config for `Qwen/Qwen3.6-35B-A3B-FP8` on `NVIDIA GB10` systems.
 
-This avoids the default Triton fallback (`Using default MoE config. Performance might be sub-optimal!`) for the tuned shape (`E=256`, `N=512`, `dtype=fp8_w8a8`, `block_shape=[128,128]`) and improved throughput by about 30% during local testing on GB10 hardware.
+This avoids the default Triton fallback (`Using default MoE config. Performance might be sub-optimal!`) for the tuned shape (`E=256`, `N=512`, `dtype=fp8_w8a8`, `block_shape=[128,128]`) and improved throughput by more than 20% during local testing on GB10 hardware.
 
 To use it, add the mod when launching:
 

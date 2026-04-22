@@ -8,7 +8,7 @@
 #
 # Without this, vLLM falls back to a generic Triton MoE kernel and prints
 # "Using default MoE config. Performance might be sub-optimal!", which was
-# about 30% slower on this hardware during local testing.
+# more than 20% slower on this hardware during local testing.
 set -e
 
 MOD_DIR="$(cd "$(dirname "$0")" && pwd)"
